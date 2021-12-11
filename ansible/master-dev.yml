@@ -1,0 +1,29 @@
+---
+- hosts: master-dev
+  become: true
+  tasks:
+    - name: update cache
+      tags: always
+      apt: update_cache=yes
+
+    - name: add webapp user
+      user:
+        name: startnet
+  
+    - name: install packages
+      package:
+        name:
+          - git
+          - python3-pip
+          - virtualenv
+          - build-essential
+          - nfs-common
+          - python3-openstackclient
+
+    - name: clone web app
+      git:
+        repo: https://github.com/sberts/startnet.git
+        dest: /home/startnet/startnet
+        update: yes
+        accept_hostkey: yes
+
