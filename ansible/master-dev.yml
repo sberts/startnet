@@ -19,6 +19,14 @@
           - build-essential
           - nfs-common
           - python3-openstackclient
+          - python3.8-venv
+
+    - name: install python packages
+      pip:
+        name:
+          - flask
+          - pytest
+          - coverage
 
     - name: clone web app
       git:
@@ -26,4 +34,13 @@
         dest: /home/startnet/startnet
         update: yes
         accept_hostkey: yes
+
+    - name: run webapp
+      shell:
+        cmd: ./start.sh
+        chdir: /home/startnet/startnet/src
+      become: yes
+      become_user: startnet
+        
+
 
